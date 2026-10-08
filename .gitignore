@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Vector store / data
+chroma_data/
+*.sqlite3
+data/uploads/
+
+# Node / UI (future)
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.idea/
+.vscode/
