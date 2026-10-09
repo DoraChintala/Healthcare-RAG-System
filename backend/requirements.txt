@@ -1,0 +1,22 @@
+# Backend runtime dependencies for the Personalized Learning RAG Assistant.
+# Pinned for reproducible installs. Install with:
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+
+# --- Web framework & server ---
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32          # multipart/form-data for file uploads (ingest)
+
+# --- Configuration & validation ---
+pydantic==2.14.0
+pydantic-settings==2.15.0         # env-driven Settings in app/core/config.py
+email-validator==2.3.0            # required by EmailStr fields in app/models/schemas.py
+
+# --- Database (MongoDB Atlas, async) ---
+motor==3.7.1                      # async driver used in app/db/mongo.py
+
+# --- Auth: JWT + password hashing ---
+python-jose[cryptography]==3.5.0  # JWT encode/decode in app/auth/security.py
+passlib[bcrypt]==1.7.4            # password hashing in app/auth/security.py
+bcrypt==4.0.1                     # pinned <4.1: passlib 1.7.4 is incompatible with bcrypt 5.x
