@@ -50,30 +50,37 @@ framework-structured answer generation, upload-and-ask over a UI, evaluation hoo
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  UI Layer        Streamlit (v1) → React (later)           │
-│                  upload, ask, see cited + leveled answer   │
+│  UI Layer        Angular 18 SPA (standalone components)    │
+│                  login/register, upload, ask, leveled ans. │
 ├──────────────────────────────────────────────────────────┤
-│  API Layer       FastAPI — REST endpoints, auth, schemas   │
+│  API Layer       FastAPI — REST, JWT auth, CORS, schemas   │
 ├──────────────────────────────────────────────────────────┤
-│  Orchestration   RAG pipeline (LlamaIndex / LangChain)     │
+│  Orchestration   Learning service (RAG pipeline later)     │
 │                  • Personalization service                 │
 │                  • Prompt templates (STAR, design thinking) │
 │                  • Answer composer + citation builder       │
 ├──────────────────────────────────────────────────────────┤
-│  Retrieval       Embeddings + Vector DB (Chroma→pgvector)  │
-│                  chunking, metadata filter, hybrid, re-rank │
+│  Retrieval       Embeddings + Atlas Vector Search          │
+│                  chunking, metadata filter, re-rank (ph2)   │
 ├──────────────────────────────────────────────────────────┤
 │  Ingestion       Loaders (PDF, docx, image/OCR) →          │
-│                  clean → chunk → embed → index             │
+│                  clean → chunk → embed → index (ph2)        │
 ├──────────────────────────────────────────────────────────┤
 │  Model Layer     LLM + embedding provider (configurable)   │
 ├──────────────────────────────────────────────────────────┤
-│  Data/Storage    Knowledge base, learner profiles, logs    │
+│  Data/Storage    MongoDB Atlas — users, profiles,          │
+│                  documents, chunks+vectors, interaction log │
 └──────────────────────────────────────────────────────────┘
 ```
 
 Each layer is independently replaceable through a defined interface (see LLD and
-DESIGN_PATTERNS). Provider, vector DB, chunking, and top-k are config-driven.
+DESIGN_PATTERNS). Provider, embeddings, chunking, and top-k are config-driven.
+
+**Data layer note:** MongoDB Atlas is the single datastore for both application data
+(users, learner profiles, document records, interaction logs) and the RAG corpus
+(chunk text + embedding vectors + metadata) via **Atlas Vector Search**. This replaces
+the earlier two-store design (MySQL + ChromaDB). Vector search is available on the free
+M0 tier, so one database covers the whole system in development.
 
 ---
 
