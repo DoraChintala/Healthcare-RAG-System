@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.routes_auth import router as auth_router
 from app.api.routes_health import router as health_router
 from app.core.config import get_settings
 from app.db.mongo import connect_to_mongo, close_mongo_connection
@@ -56,7 +57,8 @@ def create_app() -> FastAPI:
 
     # Routers
     app.include_router(health_router)
-    # Auth, ingest, and query routers are registered in later stories.
+    app.include_router(auth_router)
+    # Ingest and query routers are registered in later stories.
 
     return app
 
